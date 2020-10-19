@@ -3,6 +3,7 @@ project(f1tenth_gym_ros)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
+add_compile_options(-std=c++17)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -209,3 +210,7 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(ourdrive src/ourdrive_node.cpp)
+target_link_libraries(ourdrive ${catkin_LIBRARIES})
+add_dependencies(ourdrive f1tenth_simulator_generate_messages_cpp)
