@@ -31,7 +31,7 @@ class WallFollow:
     """
     def __init__(self):
         #Topics & Subs, Pubs
-        lidarscan_topic = '/scan'
+        lidarscan_topic = '/opp_scan' # originally /scan
         drive_topic = '/opp_drive' # originally /nav
 
         self.lidar_sub = rospy.Subscriber(lidarscan_topic, LaserScan, self.lidar_callback) #TODO: Subscribe to LIDAR

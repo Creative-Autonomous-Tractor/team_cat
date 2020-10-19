@@ -209,3 +209,7 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(testdrive_node src/testdrive_code.cpp)
+target_link_libraries(testdrive_node ${catkin_LIBRARIES})
+add_dependencies(testdrive_node f1tenth_simulator_generate_messages_cpp)

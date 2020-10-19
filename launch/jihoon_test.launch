@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  
+<include file="$(find f1tenth_gym_ros)/launch/gym_bridge_host.launch"/>
+
+<node pkg="f1tenth_gym_ros" type="wall_following.py" name="WallFollow_node" output="screen"/>
+
+<node pkg="f1tenth_gym_ros" type="testdrive_node" name="testdrive_node" output="screen"/>
+
+  </launch>

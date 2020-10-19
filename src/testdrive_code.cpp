@@ -271,7 +271,7 @@ private:
 
 int main(int argc, char ** argv)
 {
-    ros::init(argc, argv, "wellmade_node");
+    ros::init(argc, argv, "testdrive_node");
     longest_path longpath;
     ros::spin();
     return 0;
