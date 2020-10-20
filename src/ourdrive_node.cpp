@@ -98,7 +98,7 @@ size_t maximum_element_index(const std::vector<double>& input_vector)
 	std::vector<double> mod_vector;
 	mod_vector.assign(input_vector.begin(), input_vector.end());
 	for (int i = 0; i < mod_vector.size(); i++) {
-		mod_vector[i] -= abs(i - mod_vector.size()/2) * 0.01;
+		mod_vector[i] -= abs(i - int(mod_vector.size())/2) * 0.01;
 	}
     const auto max_value_iterator = std::max_element(mod_vector.begin(), mod_vector.end());
     return std::distance(mod_vector.begin(), max_value_iterator); //commented for new algorithm considering the straight
