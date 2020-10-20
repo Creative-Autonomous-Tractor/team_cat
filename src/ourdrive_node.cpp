@@ -196,10 +196,10 @@ public:
         bool risky = false;
         double RMAX = sqrt(W * W / 4 + L * L);
         double MIN = scan_msg->ranges[0];
-        for (int i = 1; i < truncated_start_idx; i++) {
+        for (int i = 1; i < (sizeof(scan_msg->ranges)/sizeof(scan_msg->ranges[0]))/2 - 3.14/2/(scan_msg->angle_increment); i++) {
             MIN = min(scan_msg->ranges[i], MIN);
         }
-        for (int j = truncated_end_idx; j < sizeof(scan_msg->ranges)/sizeof(scan_msg->ranges[0]); j++) {
+        for (int j = (sizeof(scan_msg->ranges)/sizeof(scan_msg->ranges[0]))/2 + 3.14/2/(scan_msg->angle_increment); j < sizeof(scan_msg->ranges)/sizeof(scan_msg->ranges[0]); j++) {
             MIN = min(scan_msg->ranges[j], MIN);
         }
         //ROS_INFO("RMAX is %f and MIN is %f", RMAX, MIN);
