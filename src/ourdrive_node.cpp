@@ -10,7 +10,7 @@
 #include <sensor_msgs/LaserScan.h>
 #include "std_msgs/Float32.h"
 
-#define truncated_coverage_angle_ 3.14*5/6
+#define truncated_coverage_angle_ 3.14*4/6
 
 const double W = 0.3;
 const double L = 0.5;
@@ -21,6 +21,7 @@ const double k = 2.; //jaewon's algorithm sqrt
 // const double k = 3.5; //jaewon's algorithm cubed
 const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 15.0; //
+const double MAX_STEERING_ANGLE = 25 * 3.14 / 180; //
 const double MIN_SAFE_Distance = 15.0; //
 const double additional_gap = 3; //originally 1.2
 const int average_size = 9;
@@ -109,7 +110,7 @@ class longest_path {
 public:
     longest_path():
         node_handle_(ros::NodeHandle()),
-        ///lidar_sub_(node_handle_.subscribe("scan", 100, &longest_path::scan_callback, this)),
+        //lidar_sub_(node_handle_.subscribe("scan", 100, &longest_path::scan_callback, this)),
         //drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("drive", 100)), // originally "nav"
         
         lidar_sub_(node_handle_.subscribe("team_cat/scan", 100, &longest_path::scan_callback, this)),
