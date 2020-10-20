@@ -103,8 +103,8 @@ class longest_path {
 public:
     longest_path():
         node_handle_(ros::NodeHandle()),
-        lidar_sub_(node_handle_.subscribe("ego_id/scan", 100, &longest_path::scan_callback, this)),
-        drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("ego_id/drive", 100)), // originally "nav"
+        lidar_sub_(node_handle_.subscribe("team_cat/scan", 100, &longest_path::scan_callback, this)),
+        drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("team_cat/drive", 100)), // originally "nav"
         truncated_(false){}
     
 
