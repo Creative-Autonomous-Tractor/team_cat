@@ -95,18 +95,13 @@ size_t maximum_element_index(const std::vector<double>& input_vector)
     //std::vector<double> smoothened_vector = apply_smoothing_filter(input_vector, 3);
     //const auto max_value_iterator = std::max_element(smoothened_vector.begin(), smoothened_vector.end());
     //return std::distance(smoothened_vector.begin(), max_value_iterator);
-<<<<<<< HEAD
-    const auto max_value_iterator = std::max_element(input_vector.begin(), input_vector.end());
-    return std::distance(input_vector.begin(), max_value_iterator); //commented for new algorithm considering the straight
-=======
 	std::vector<double> mod_vector;
 	mod_vector.assign(input_vector.begin(), input_vector.end());
 	for (int i = 0; i < mod_vector.size(); i++) {
-		mod_vector[i] -= abs(i - mod.vector.size()/2) * 0.01;
+		mod_vector[i] -= abs(i - mod_vector.size()/2) * 0.01;
 	}
     const auto max_value_iterator = std::max_element(mod_vector.begin(), mod_vector.end());
     return std::distance(mod_vector.begin(), max_value_iterator); //commented for new algorithm considering the straight
->>>>>>> 19e865fdf6bf9b32ca16331bff46bc1b6486ecaf
     
 }
 
@@ -114,13 +109,8 @@ class longest_path {
 public:
     longest_path():
         node_handle_(ros::NodeHandle()),
-<<<<<<< HEAD
-        lidar_sub_(node_handle_.subscribe("scan", 100, &longest_path::scan_callback, this)),
-        drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("drive", 100)), // originally "nav"
-=======
         lidar_sub_(node_handle_.subscribe("team_cat/scan", 100, &longest_path::scan_callback, this)),
         drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("team_cat/drive", 100)), // originally "nav"
->>>>>>> 19e865fdf6bf9b32ca16331bff46bc1b6486ecaf
         truncated_(false){}
     
 
