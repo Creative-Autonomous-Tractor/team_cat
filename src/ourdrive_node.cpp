@@ -9,36 +9,36 @@
 #include <sensor_msgs/LaserScan.h>
 #include "std_msgs/Float32.h"
 
-#define truncated_coverage_angle_ 3.14 * 5/6
+#define truncated_coverage_angle_ 3.14*5/6
 
 const double W = 0.3;
 const double L = 0.5;
 // PARAMETER TO BE DEFINED 
 // const double k = 2 * 1.4; //sqrt
 // const double k = 4; //cubed
-const double k = 2.; //jaewon's algorithm 
+// const double k = 3.5; //jaewon's algorithm sqrt
+const double k = 3.5; //jaewon's algorithm cubed
 const double deltath = 0.1; // disparity gijoon
-const double MAX_Velocity = 15.; //meaningless // 7.0;  // from params.yaml of F1TENTH Simulator
-const double MAX_STERRING_ANGLE = 5; //meaningless // 0.4189; //in radians, from params.yaml of F1TENTH Simulator
+const double MAX_Velocity = 15.0; //
 const double MIN_SAFE_Distance = 15.0; //
 const double additional_gap = 3; //originally 1.2
 const int average_size = 9;
 
 const double DELTA_CURVE_ANGLE_THRESHOLD = 5; //in degrees
-const double CURVE_VELOCITY_COEFFICIENT = 0.4; //how much lower the speed will be when curving
+const double CURVE_VELOCITY_COEFFICIENT = 0.2; //how much lower the speed will be when curving
 
 double min(double a, double b) {
     return a > b ? b : a;
 }
 
 double get_velocity_by_steeringAngle(double delta_steering_angle, double front_distance) {
+    // double velocity = std::min(k * sqrt(front_distance), MAX_Velocity); //squared
+    double velocity = std::min(k * pow(front_distance, 1/3), MAX_Velocity); //cubed
 	if (delta_steering_angle > 3.14159265358979 / 180 * DELTA_CURVE_ANGLE_THRESHOLD) {
-		double velocity = std::min(k * sqrt(front_distance), MAX_Velocity);
-		//double velocity = std::min(k * std::pow(front_distance, 1/3.),MAX_Velocity);				
 		return velocity / delta_steering_angle * CURVE_VELOCITY_COEFFICIENT;
 	}
 	else {
-		return std::min(k * sqrt(front_distance), MAX_Velocity);
+		return velocity;
 	} //we should think about cubed later on as well
 }
 
@@ -95,7 +95,8 @@ size_t maximum_element_index(const std::vector<double>& input_vector)
     //const auto max_value_iterator = std::max_element(smoothened_vector.begin(), smoothened_vector.end());
     //return std::distance(smoothened_vector.begin(), max_value_iterator);
     const auto max_value_iterator = std::max_element(input_vector.begin(), input_vector.end());
-    return std::distance(input_vector.begin(), max_value_iterator); //let's see later
+    return std::distance(input_vector.begin(), max_value_iterator); //commented for new algorithm considering the straight
+    
 }
 
 class longest_path {
@@ -103,7 +104,7 @@ public:
     longest_path():
         node_handle_(ros::NodeHandle()),
         lidar_sub_(node_handle_.subscribe("ego_id/scan", 100, &longest_path::scan_callback, this)),
-        drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("ego_id/drive", 100)),
+        drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("ego_id/drive", 100)), // originally "nav"
         truncated_(false){}
     
 
@@ -219,65 +220,33 @@ public:
 
         if (!BackCollision_detect(scan_msg, truncated_start_index_, truncated_end_index_)) {
             auto disparities_indices = find_disparities(filtered_ranges, 0, filtered_ranges.size());
-	    int temp;
 
             for (int disparity_index = 0; disparity_index < disparities_indices.size(); disparity_index++) {
                 int range_index = disparities_indices.at(disparity_index);
                 int delta_index = get_delta_ThetaIndex(filtered_ranges.at(range_index), scan_msg->angle_increment);
                 extend_disparity(filtered_ranges, range_index, delta_index);
             }
-
-	    temp = maximum_element_index(filtered_ranges);
-	    if (filtered_ranges.at(temp) < 20) {
-            	max_element_index = temp;
-		//ROS_INFO("No While!");
-	    }
-	    else {
-		max_element_index = filtered_ranges.size() / 2;
-		if (temp < filtered_ranges.size() / 2) {
-		while (filtered_ranges.at(max_element_index) < 20)
-		    max_element_index--;
-		}
-		else {
-		while (filtered_ranges.at(max_element_index) < 20)
-		    max_element_index++;
-		}
-		// ROS_INFO("While!");
-	    }
-	    /*
-	    ROS_INFO("max_element: %f, front_index: %f", filtered_ranges.at(max_element_index), 
-							 filtered_ranges.at(filtered_ranges.size() / 2));
-	    */
-
-            double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
-	    if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
-	        temp_steering_angle = 0;
-            //if (temp_steering_angle > 3.14 / 8)
-	        //steering_angle = 3.14 / 8;
-            //else if (temp_steering_angle < -3.14 / 8)
-		//steering_angle = -3.14 / 8;
-	    //else
-	        steering_angle = temp_steering_angle;
-	    
+            max_element_index = maximum_element_index(filtered_ranges);
+            steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
+            
             //ROS_INFO("The difference is %i", max_element_index - original_max);
             /*std::string x = "";
             for(int i=-2; i<2; i++) {
                 x += (", "+ boost::lexical_cast<std::string>(filtered_ranges.at(maximum_element_index + i)));
             }
             ROS_INFO(x);*/
+            ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
             //ROS_INFO("1: %f, 2: %f, 3: %f, 4: %f, 5: %f\n", filtered_ranges.at(max_element_index-2), filtered_ranges.at(max_element_index-1), filtered_ranges.at(max_element_index), filtered_ranges.at(max_element_index+1), filtered_ranges.at(max_element_index+2));
             //ROS_INFO("Disparity Angle is %f", )
         }
-        //std::clamp(steering_angle, -MAX_STERRING_ANGLE, MAX_STERRING_ANGLE);
-        ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
         //else ROS_INFO("None");
 
         //max_element_index = maximum_element_index(filtered_ranges);
 
         // double velocity = std::min(k * filtered_ranges.at(filtered_ranges.size()/2), MAX_Velocity);
         // double velocity = std::min(k * sqrt(filtered_ranges.at(filtered_ranges.size()/2)), MAX_Velocity);
-        // double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
-        double velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
+        double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
+        // double velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
 
         // Publish Drive message
         ackermann_msgs::AckermannDriveStamped drive_msg;
@@ -302,7 +271,7 @@ private:
 
 int main(int argc, char ** argv)
 {
-    ros::init(argc, argv, "ourdrive");
+    ros::init(argc, argv, "wellmade_node");
     longest_path longpath;
     ros::spin();
     return 0;
