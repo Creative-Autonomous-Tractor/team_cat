@@ -246,12 +246,14 @@ public:
 			else { //If there is plenty space ahead, go in a diretion close to being straight as possible
 				max_element_index = filtered_ranges.size() / 2;
 				if (temp < filtered_ranges.size() / 2) {
-					while (filtered_ranges.at(max_element_index) < 25)
+					while (filtered_ranges.at(max_element_index) < 20 && max_element_index > 0)
 						max_element_index--;
+					max_element_index = (filtered_ranges.size() / 2 + max_element_index) / 2;
 				}
 				else {
-					while (filtered_ranges.at(max_element_index) < 25)
+					while (filtered_ranges.at(max_element_index) < 20 && (max_element_index < filtered_ranges.size() - 1))
 						max_element_index++;
+					max_element_index = (filtered_ranges.size() / 2 + max_element_index) / 2;
 				}
 			}
 			double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
