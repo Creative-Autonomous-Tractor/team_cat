@@ -255,8 +255,8 @@ public:
 				}
 			}
 			double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
-	    	if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
-	        	temp_steering_angle = 0;
+	    	/* if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
+	        	temp_steering_angle = 0; Comment to see if anything will be different*/
 	        steering_angle = temp_steering_angle;
             
             //ROS_INFO("The difference is %i", max_element_index - original_max);
