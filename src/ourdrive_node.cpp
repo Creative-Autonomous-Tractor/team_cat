@@ -13,12 +13,12 @@
 #define truncated_coverage_angle_ 3.14*4/6
 
 const double W = 0.3;
-const double L = 0.5;
+const double L = 0.7;
 // PARAMETER TO BE DEFINED 
 // const double k = 2 * 1.4; //sqrt
 // const double k = 4; //cubed
-const double k = 3.5; //jaewon's algorithm sqrt
-// const double k = 3.5; //jaewon's algorithm cubed
+// const double k = 3.5; //jaewon's algorithm sqrt
+const double k = 4.5; //jaewon's algorithm cubed
 const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 7.0; //
 const double MAX_STEERING_ANGLE = 0.4819;// 25 * 3.14 / 180; //
