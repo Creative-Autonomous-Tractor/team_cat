@@ -23,7 +23,7 @@ const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 100;//limited and crahsed so trying limitless again 15.0; //
 const double MAX_STEERING_ANGLE = 0.4819;// 25 * 3.14 / 180; //
 const double MIN_SAFE_Distance = 15.0; //
-const double additional_gap = 3; //originally 1.2
+const double additional_gap = 4; //originally 1.2
 const int average_size = 9;
 
 const double DELTA_CURVE_ANGLE_THRESHOLD = 5; //in degrees
