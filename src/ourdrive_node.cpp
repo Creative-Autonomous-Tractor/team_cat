@@ -10,7 +10,7 @@
 #include <sensor_msgs/LaserScan.h>
 #include "std_msgs/Float32.h"
 
-#define truncated_coverage_angle_ 3.14*3/6
+#define truncated_coverage_angle_ 3.14*4/6
 
 const double W = 0.3;
 const double L = 0.5;
@@ -236,8 +236,27 @@ public:
                 int delta_index = get_delta_ThetaIndex(filtered_ranges.at(range_index), scan_msg->angle_increment);
                 extend_disparity(filtered_ranges, range_index, delta_index);
             }
-            max_element_index = maximum_element_index(filtered_ranges);
-            steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
+            /* max_element_index = maximum_element_index(filtered_ranges);
+            steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index); Erased for Bamjoon's algorithm*/
+			temp = maximum_element_index(filtered_ranges);
+	    	if (filtered_ranges.at(temp) < 20) {
+            	max_element_index = temp;
+			//ROS_INFO("No While!");
+	    	}
+			else {
+			max_element_index = filtered_ranges.size() / 2;
+			if (temp < filtered_ranges.size() / 2) {
+				while (filtered_ranges.at(max_element_index) < 20)
+					max_element_index--;
+			}
+			else {
+				while (filtered_ranges.at(max_element_index) < 20)
+					max_element_index++;
+			}
+			double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
+	    	if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
+	        	temp_steering_angle = 0;
+	        steering_angle = temp_steering_angle;
             
             //ROS_INFO("The difference is %i", max_element_index - original_max);
             /*std::string x = "";
