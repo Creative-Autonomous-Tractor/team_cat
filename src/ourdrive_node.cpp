@@ -34,8 +34,8 @@ double min(double a, double b) {
 }
 
 double get_velocity_by_steeringAngle(double delta_steering_angle, double front_distance) {
-    double velocity = std::min(k * sqrt(front_distance), MAX_Velocity); //squared
-    // double velocity = std::min(k * pow(front_distance, 1/3), MAX_Velocity); //cubed
+    // double velocity = std::min(k * sqrt(front_distance), MAX_Velocity); //squared
+    double velocity = std::min(k * pow(front_distance, 1/3), MAX_Velocity); //cubed
 	if (delta_steering_angle > 3.14159265358979 / 180 * DELTA_CURVE_ANGLE_THRESHOLD) {
 		return velocity / delta_steering_angle * CURVE_VELOCITY_COEFFICIENT;
 	}
@@ -277,8 +277,8 @@ public:
 
         // double velocity = std::min(k * filtered_ranges.at(filtered_ranges.size()/2), MAX_Velocity);
         // double velocity = std::min(k * sqrt(filtered_ranges.at(filtered_ranges.size()/2)), MAX_Velocity);
-        double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
-        // double velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
+        // double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
+        double velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
 
         // Publish Drive message
         ackermann_msgs::AckermannDriveStamped drive_msg;
