@@ -17,7 +17,7 @@ const double L = 0.5;
 // PARAMETER TO BE DEFINED 
 // const double k = 2 * 1.4; //sqrt
 // const double k = 4; //cubed
-const double k = 3.5; //jaewon's algorithm sqrt
+const double k = 2.; //jaewon's algorithm sqrt
 // const double k = 3.5; //jaewon's algorithm cubed
 const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 15.0; //
