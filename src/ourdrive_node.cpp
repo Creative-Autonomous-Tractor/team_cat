@@ -246,11 +246,11 @@ public:
 			else { //If there is plenty space ahead, go in a diretion close to being straight as possible
 				max_element_index = filtered_ranges.size() / 2;
 				if (temp < filtered_ranges.size() / 2) {
-					while (filtered_ranges.at(max_element_index) < 40)
+					while (filtered_ranges.at(max_element_index) < 25)
 						max_element_index--;
 				}
 				else {
-					while (filtered_ranges.at(max_element_index) < 40)
+					while (filtered_ranges.at(max_element_index) < 25)
 						max_element_index++;
 				}
 			}
