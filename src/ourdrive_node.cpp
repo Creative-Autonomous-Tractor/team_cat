@@ -10,7 +10,7 @@
 #include <sensor_msgs/LaserScan.h>
 #include "std_msgs/Float32.h"
 
-#define truncated_coverage_angle_ 3.14*4/6
+#define truncated_coverage_angle_ 3.14*3/6
 
 const double W = 0.3;
 const double L = 0.5;
