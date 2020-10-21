@@ -238,20 +238,21 @@ public:
             }
             /* max_element_index = maximum_element_index(filtered_ranges);
             steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index); Erased for Bamjoon's algorithm*/
-			temp = maximum_element_index(filtered_ranges);
+			int temp = maximum_element_index(filtered_ranges);
 	    	if (filtered_ranges.at(temp) < 20) {
             	max_element_index = temp;
 			//ROS_INFO("No While!");
 	    	}
 			else {
-			max_element_index = filtered_ranges.size() / 2;
-			if (temp < filtered_ranges.size() / 2) {
+				max_element_index = filtered_ranges.size() / 2;
+				if (temp < filtered_ranges.size() / 2) {
 				while (filtered_ranges.at(max_element_index) < 20)
 					max_element_index--;
-			}
-			else {
-				while (filtered_ranges.at(max_element_index) < 20)
-					max_element_index++;
+				}
+				else {
+					while (filtered_ranges.at(max_element_index) < 20)
+						max_element_index++;
+				}
 			}
 			double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
 	    	if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
