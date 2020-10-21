@@ -243,11 +243,11 @@ public:
             	max_element_index = temp;
 			//ROS_INFO("No While!");
 	    	}
-			else {
+			else { //If there is plenty space ahead, go in a diretion close to being straight as possible
 				max_element_index = filtered_ranges.size() / 2;
 				if (temp < filtered_ranges.size() / 2) {
-				while (filtered_ranges.at(max_element_index) < 20)
-					max_element_index--;
+					while (filtered_ranges.at(max_element_index) < 20)
+						max_element_index--;
 				}
 				else {
 					while (filtered_ranges.at(max_element_index) < 20)
@@ -277,8 +277,8 @@ public:
 
         // double velocity = std::min(k * filtered_ranges.at(filtered_ranges.size()/2), MAX_Velocity);
         // double velocity = std::min(k * sqrt(filtered_ranges.at(filtered_ranges.size()/2)), MAX_Velocity);
-        double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
-        // double velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
+        // double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
+        double velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
 
         // Publish Drive message
         ackermann_msgs::AckermannDriveStamped drive_msg;
