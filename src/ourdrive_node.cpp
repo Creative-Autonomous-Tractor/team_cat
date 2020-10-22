@@ -36,6 +36,9 @@ const int scan_number_decelerate_gijoon = 400;
 int start_velocity = 100;
 
 bool is_max_speed_okay = true;
+bool is_max_speed_okay_after = false;
+
+const double jilju_angle = 0.1;
 
 double min(double a, double b) {
     return a > b ? b : a;
@@ -241,15 +244,24 @@ if (scan_number > scan_number_decelerate_gijoon){
 }
 else if (scan_number > scan_number_gijoon){*/
     if (is_max_speed_okay) {
-        if(velocity > 1) velocity -= 1;
-	if(scan_msg->ranges[scan_msg->ranges.size()/2] < 5) {
-	    is_max_speed_okay = false;
+        if (velocity > 1) velocity -= 1;
+	    if (scan_msg->ranges[scan_msg->ranges.size()/2] < 5) {
+	        is_max_speed_okay = false;
             start_velocity = 30;
-	}
+	    }
     }
+    if (is_max_speed_okay_after) {
+        if (velocity > 1) velocity -= 1;
+		int max_index = maximum_element_index(filtered_ranges);
+		steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max__index);
+		steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
+	    if (scan_msg->ranges[scan_msg->ranges.size()/2] < 5) {
+	        is_max_speed_okay_after = false;
+		
+	}
     else {
 	if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
-	    is_max_speed_okay = true;
+	    is_max_speed_okay_after = true;
             return;
 	}
         int original_max = maximum_element_index(filtered_ranges);
