@@ -38,7 +38,7 @@ int start_velocity = 100;
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
 
-const double jilju_angle = 0.1;
+const double jilju_angle = 0.1 * 3.14 / 180;
 
 double min(double a, double b) {
     return a > b ? b : a;
