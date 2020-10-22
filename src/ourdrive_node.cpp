@@ -31,7 +31,8 @@ const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will b
 
 
 int scan_number = 0; // how many times scancallback was called
-const int scan_number_gijoon = 300;
+const int scan_number_gijoon = 500;
+const int scan_number_decelerate_gijoon = 400;
 
 double min(double a, double b) {
     return a > b ? b : a;
@@ -226,12 +227,15 @@ public:
         filtered_ranges = apply_smoothing_filter(filtered_ranges);
 
         double steering_angle = 0;
-	double velocity = 50;
+	double velocity = 100;
 
 	    
 	// first start algorithm
 	scan_number++;
-if (scan_number > scan_number_gijoon){
+if (scan_number > scan_number_decelerate_gijoon){
+	velocity--;
+}
+else if (scan_number > scan_number_gijoon){
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
