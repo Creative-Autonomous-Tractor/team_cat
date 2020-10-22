@@ -31,6 +31,7 @@ const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will b
 
 
 int scan_number = 0; // how many times scancallback was called
+const int scan_number_gijoon = 800;
 
 double min(double a, double b) {
     return a > b ? b : a;
@@ -230,7 +231,7 @@ public:
 	    
 	// first start algorithm
 	scan_number++;
-if (scan_number > 500){
+if (scan_number > scan_number_gijoon){
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
