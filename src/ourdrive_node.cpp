@@ -31,8 +31,8 @@ const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will b
 
 
 int scan_number = 0; // how many times scancallback was called
-const int scan_number_gijoon = 500;
-const int scan_number_decelerate_gijoon = 400;
+const int scan_number_gijoon = 300;
+const int scan_number_decelerate_gijoon = 200;
 
 double min(double a, double b) {
     return a > b ? b : a;
