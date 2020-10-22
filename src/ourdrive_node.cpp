@@ -35,7 +35,7 @@ const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
 int start_velocity = 100;
 
-boolean is_max_speed_okay = true;
+bool is_max_speed_okay = true;
 
 double min(double a, double b) {
     return a > b ? b : a;
