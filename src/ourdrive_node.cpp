@@ -241,8 +241,8 @@ if (scan_number > scan_number_decelerate_gijoon){
 }
 else if (scan_number > scan_number_gijoon){*/
     if (is_max_speed_okay) {
-        if(velocity > 1) velocity -= 0;
-		if(scan_msg->ranges[scan_msg->ranges.size()/2] < 5) is_max_speed_okay = false;
+        if(velocity > 1) velocity -= 1;
+		if(scan_msg->ranges[scan_msg->ranges.size()/2] < 7) is_max_speed_okay = false;
 	}
 	else {
         int original_max = maximum_element_index(filtered_ranges);
