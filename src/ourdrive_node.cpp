@@ -34,6 +34,8 @@ int scan_number = 0; // how many times scancallback was called
 const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
 
+boolean is_max_speed_okay = true;
+
 double min(double a, double b) {
     return a > b ? b : a;
 }
@@ -232,10 +234,15 @@ public:
 	    
 	// first start algorithm
 	scan_number++;
+	    /*
 if (scan_number > scan_number_decelerate_gijoon){
 	velocity--;
 }
-else if (scan_number > scan_number_gijoon){
+else if (scan_number > scan_number_gijoon){*/
+	if (is_max_speed_okay) {
+		if(scan_msg->ranges[scan_msg->ranges.size()/2] < 20) is_max_speed_okay = false;
+	}
+	else {
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
