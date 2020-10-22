@@ -230,7 +230,7 @@ public:
 	// first start algorithm
 	scan_number++;
 	double delta_scan_time = scan_msg->scan_time;
-	ROS_INFO("scan_number: ", scan_number, "   scan_time: ", scan_time);
+	ROS_INFO("scan_number: %d,    scan_time: %f", scan_number, scan_time);
 
         int original_max = maximum_element_index(filtered_ranges);
 
