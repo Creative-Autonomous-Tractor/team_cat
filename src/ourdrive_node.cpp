@@ -244,14 +244,14 @@ if (scan_number > scan_number_decelerate_gijoon){
 }
 else if (scan_number > scan_number_gijoon){*/
     if (is_max_speed_okay) {
-        if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 10) velocity /= 2;
+        if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 3;
 	    if (scan_msg->ranges[scan_msg->ranges.size()/2] < 5) {
 	        is_max_speed_okay = false;
             start_velocity = 30;
 	    }
     }
     if (is_max_speed_okay_after) {
-        if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 10) velocity /= 2;
+        if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 3;
 		int max_index = maximum_element_index(filtered_ranges);
 		steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
 		steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
