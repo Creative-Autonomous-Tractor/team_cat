@@ -225,14 +225,12 @@ public:
         filtered_ranges = apply_smoothing_filter(filtered_ranges);
 
         double steering_angle = 0;
+	double velocity = 100;
 
 	    
 	// first start algorithm
 	scan_number++;
-if (scan_number < 500){
-	double velocity = 100;
-}
-else{
+if (scan_number > 500){
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
@@ -289,7 +287,7 @@ else{
         // double velocity = std::min(k * filtered_ranges.at(filtered_ranges.size()/2), MAX_Velocity);
         // double velocity = std::min(k * sqrt(filtered_ranges.at(filtered_ranges.size()/2)), MAX_Velocity);
         // double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
-        double velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
+        velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size()/2));
 }
 	    
         // Publish Drive message
