@@ -239,19 +239,19 @@ public:
             /* max_element_index = maximum_element_index(filtered_ranges);
             steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index); Erased for Bamjoon's algorithm*/
 			int temp = maximum_element_index(filtered_ranges);
-	    	if (filtered_ranges.at(temp) < 20) {
+	    	if (filtered_ranges.at(temp) < 15) {
             	max_element_index = temp;
 			//ROS_INFO("No While!");
 	    	}
 			else { //If there is plenty space ahead, go in a diretion close to being straight as possible
 				max_element_index = filtered_ranges.size() / 2;
 				if (temp < filtered_ranges.size() / 2) {
-					while (filtered_ranges.at(max_element_index) < 20 && max_element_index > 0)
+					while (filtered_ranges.at(max_element_index) < 15 && max_element_index > 0)
 						max_element_index--;
 					//max_element_index = (filtered_ranges.size() / 2 + temp) / 2;
 				}
 				else {
-					while (filtered_ranges.at(max_element_index) < 20 && (max_element_index < filtered_ranges.size() - 1))
+					while (filtered_ranges.at(max_element_index) < 15 && (max_element_index < filtered_ranges.size() - 1))
 						max_element_index++;
 					//max_element_index = (filtered_ranges.size() / 2 + temp) / 2;
 				}
