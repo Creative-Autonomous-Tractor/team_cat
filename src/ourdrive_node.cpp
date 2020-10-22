@@ -243,8 +243,12 @@ else if (scan_number > scan_number_gijoon){*/
     if (is_max_speed_okay) {
         if(velocity > 1) velocity -= 1;
 		if(scan_msg->ranges[scan_msg->ranges.size()/2] < 7) is_max_speed_okay = false;
+    }
+    else {
+	if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
+	    is_max_speed_okay = true;
+            return;
 	}
-	else {
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
