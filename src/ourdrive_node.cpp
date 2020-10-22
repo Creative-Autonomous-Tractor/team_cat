@@ -29,6 +29,9 @@ const int average_size = 9;
 const double DELTA_CURVE_ANGLE_THRESHOLD = 5; //in degrees
 const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will be when curving
 
+
+int scan_number = 0; // how many times scancallback was called
+
 double min(double a, double b) {
     return a > b ? b : a;
 }
@@ -223,6 +226,11 @@ public:
 
         double steering_angle = 0;
 
+	    
+	// first start algorithm
+	scan_number++;
+	double delta_scan_time = scan_msg->scan_time;
+	ROS_INFO("scan_number: ", scan_number, "   scan_time: ", scan_time);
 
         int original_max = maximum_element_index(filtered_ranges);
 
@@ -269,7 +277,7 @@ public:
             ROS_INFO(x);*/
 			if(steering_angle > MAX_STEERING_ANGLE) steering_angle = MAX_STEERING_ANGLE;
 			if(steering_angle < -MAX_STEERING_ANGLE) steering_angle = -MAX_STEERING_ANGLE;
-            ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
+            // ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
             //ROS_INFO("1: %f, 2: %f, 3: %f, 4: %f, 5: %f\n", filtered_ranges.at(max_element_index-2), filtered_ranges.at(max_element_index-1), filtered_ranges.at(max_element_index), filtered_ranges.at(max_element_index+1), filtered_ranges.at(max_element_index+2));
             //ROS_INFO("Disparity Angle is %f", )
         }
