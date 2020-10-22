@@ -35,6 +35,8 @@ const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
 int start_velocity = 100;
 
+boolean is_max_speed_okay = true;
+
 double min(double a, double b) {
     return a > b ? b : a;
 }
@@ -233,10 +235,16 @@ public:
 	    
 	// first start algorithm
 	scan_number++;
-if (scan_number > scan_number_decelerate_gijoon && scan_number < scan_number_gijoon){
-	start_velocity--;
+	    /*
+if (scan_number > scan_number_decelerate_gijoon){
+	velocity--;
 }
-if (scan_number > scan_number_gijoon){
+else if (scan_number > scan_number_gijoon){*/
+	if (is_max_speed_okay) {
+    velocity-=0.1;
+		if(scan_msg->ranges[scan_msg->ranges.size()/2] < 20) is_max_speed_okay = false;
+	}
+	else {
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
