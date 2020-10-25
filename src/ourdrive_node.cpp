@@ -39,7 +39,7 @@ const double max_delta_steering_angle = 3.14 / 180 * 12;// deg
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
 
-const double jilju_angle = 0.5 * 3.14 / 180;
+const double jilju_angle = 0.15 * 3.14 / 180;
 
 double min(double a, double b) {
     return a > b ? b : a;
@@ -324,7 +324,7 @@ else if (scan_number > scan_number_gijoon){*/
 			if(steering_angle < -MAX_STEERING_ANGLE) {
 				steering_angle = -MAX_STEERING_ANGLE;
 			}
-			steering_angle = std::clamp(steering_angle, prev_steering_angle - max_delta_steering_angle, prev_steering_angle + max_delta_steering_angle);
+			//steering_angle = std::clamp(steering_angle, prev_steering_angle - max_delta_steering_angle, prev_steering_angle + max_delta_steering_angle);
 			prev_steering_angle = steering_angle;
             // ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
             //ROS_INFO("1: %f, 2: %f, 3: %f, 4: %f, 5: %f\n", filtered_ranges.at(max_element_index-2), filtered_ranges.at(max_element_index-1), filtered_ranges.at(max_element_index), filtered_ranges.at(max_element_index+1), filtered_ranges.at(max_element_index+2));
