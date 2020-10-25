@@ -253,7 +253,7 @@ else if (scan_number > scan_number_gijoon){*/
         // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2; //velocity is 50
         else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 0.1;
     }
-    if (is_max_speed_okay_after) {
+    else if (is_max_speed_okay_after) {
 		int max_index = maximum_element_index(filtered_ranges);
 		steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
 		steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
