@@ -29,17 +29,16 @@ const int average_size = 9;
 const double DELTA_CURVE_ANGLE_THRESHOLD = 5; //in degrees
 const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will be when curving
 
+
 int scan_number = 0; // how many times scancallback was called
 const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
-double start_velocity = 30;
-double prev_steering_angle = 0; // deg
-const double max_delta_steering_angle = 3.14 / 180 * 12;// deg
+int start_velocity = 30;
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
 
-const double jilju_angle = 0.15 * 3.14 / 180;
+const double jilju_angle = 0.11 * 3.14 / 180;
 
 double min(double a, double b) {
     return a > b ? b : a;
@@ -235,6 +234,7 @@ public:
 
         double steering_angle = 0;
 	double velocity = start_velocity;
+
 	    
 	// first start algorithm
 	scan_number++;
@@ -247,7 +247,6 @@ else if (scan_number > scan_number_gijoon){*/
         if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
             is_max_speed_okay = false;
             start_velocity = 30;
-		    ROS_INFO("Jilju OUT");
         }
         // if (start_velocity > 1) start_velocity -= 0.01;
         // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5; //velocity is 20
@@ -258,12 +257,10 @@ else if (scan_number > scan_number_gijoon){*/
 		int max_index = maximum_element_index(filtered_ranges);
 		steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
 		steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
-		//ROS_INFO("Velocity: %f, Start_velocity: %f", velocity, start_velocity);
 
 	    if (scan_msg->ranges[scan_msg->ranges.size()/2] < 5) {
 	    	is_max_speed_okay_after = false;
 			start_velocity = 30;
-		    ROS_INFO("Jilju OUT");
 			return;
 		}
         // if (start_velocity > 1) start_velocity -= 0.01;
@@ -272,12 +269,10 @@ else if (scan_number > scan_number_gijoon){*/
         else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 0.1;
 	}
     else {
-		if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
+		/*if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
 	    	is_max_speed_okay_after = true;
-			ROS_INFO("Jilju IN");
             return;
-		}
-		//ROS_INFO("Velocity: %f, Start_velocity: %f", velocity, start_velocity);
+	}*/
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
@@ -321,14 +316,8 @@ else if (scan_number > scan_number_gijoon){*/
                 x += (", "+ boost::lexical_cast<std::string>(filtered_ranges.at(maximum_element_index + i)));
             }
             ROS_INFO(x);*/
-			if(steering_angle > MAX_STEERING_ANGLE) {
-				steering_angle = MAX_STEERING_ANGLE;
-			}
-			if(steering_angle < -MAX_STEERING_ANGLE) {
-				steering_angle = -MAX_STEERING_ANGLE;
-			}
-			//steering_angle = std::clamp(steering_angle, prev_steering_angle - max_delta_steering_angle, prev_steering_angle + max_delta_steering_angle);
-			prev_steering_angle = steering_angle;
+			if(steering_angle > MAX_STEERING_ANGLE) steering_angle = MAX_STEERING_ANGLE;
+			if(steering_angle < -MAX_STEERING_ANGLE) steering_angle = -MAX_STEERING_ANGLE;
             // ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
             //ROS_INFO("1: %f, 2: %f, 3: %f, 4: %f, 5: %f\n", filtered_ranges.at(max_element_index-2), filtered_ranges.at(max_element_index-1), filtered_ranges.at(max_element_index), filtered_ranges.at(max_element_index+1), filtered_ranges.at(max_element_index+2));
             //ROS_INFO("Disparity Angle is %f", )
