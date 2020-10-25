@@ -33,7 +33,7 @@ const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will b
 int scan_number = 0; // how many times scancallback was called
 const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
-int start_velocity = 30;
+double start_velocity = 30;
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
@@ -273,7 +273,8 @@ else if (scan_number > scan_number_gijoon){*/
 		if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
 	    	is_max_speed_okay_after = true;
             return;
-	}
+		}
+		ROS_INFO("Velocity: %f, Start_velocity: %f", velocity, start_velocity);
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
