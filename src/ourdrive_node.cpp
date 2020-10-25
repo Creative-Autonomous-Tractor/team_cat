@@ -239,10 +239,10 @@ public:
         // first start algorithm
         scan_number++;
         /*
-if (scan_number > scan_number_decelerate_gijoon){
-    velocity--;
-}
-else if (scan_number > scan_number_gijoon){*/
+        if (scan_number > scan_number_decelerate_gijoon){
+            velocity--;
+        }
+        else if (scan_number > scan_number_gijoon){*/
         if (is_max_speed_okay) {
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
                 is_max_speed_okay = false;
@@ -317,7 +317,7 @@ else if (scan_number > scan_number_gijoon){*/
                 ROS_INFO(x);*/
                 if (steering_angle > MAX_STEERING_ANGLE) steering_angle = MAX_STEERING_ANGLE;
                 if (steering_angle < -MAX_STEERING_ANGLE) steering_angle = -MAX_STEERING_ANGLE;
-                // ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
+                ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
                 //ROS_INFO("1: %f, 2: %f, 3: %f, 4: %f, 5: %f\n", filtered_ranges.at(max_element_index-2), filtered_ranges.at(max_element_index-1), filtered_ranges.at(max_element_index), filtered_ranges.at(max_element_index+1), filtered_ranges.at(max_element_index+2));
                 //ROS_INFO("Disparity Angle is %f", )
             }
