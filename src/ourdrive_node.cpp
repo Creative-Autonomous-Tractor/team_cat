@@ -33,7 +33,7 @@ const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will b
 int scan_number = 0; // how many times scancallback was called
 const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
-int start_velocity = 30;
+float start_velocity = 30;
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
@@ -269,7 +269,7 @@ else if (scan_number > scan_number_gijoon){*/
         // if (start_velocity > 1) start_velocity -= 0.01;
         // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
         // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
-        else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 1;
+        else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 0.1;
 	}
     else {
 		if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
