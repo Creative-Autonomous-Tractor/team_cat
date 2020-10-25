@@ -247,6 +247,7 @@ else if (scan_number > scan_number_gijoon){*/
         if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
             is_max_speed_okay = false;
             start_velocity = 30;
+		    ROS_INFO("Jilju OUT");
         }
         // if (start_velocity > 1) start_velocity -= 0.01;
         // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5; //velocity is 20
