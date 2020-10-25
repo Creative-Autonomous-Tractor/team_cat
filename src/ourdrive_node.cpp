@@ -233,7 +233,52 @@ public:
         filtered_ranges = apply_smoothing_filter(filtered_ranges);
 
         double steering_angle = 0;
+<<<<<<< HEAD
         double velocity = start_velocity;
+=======
+	double velocity = start_velocity;
+
+	    
+	// first start algorithm
+	scan_number++;
+	    /*
+if (scan_number > scan_number_decelerate_gijoon){
+	velocity--;
+}
+else if (scan_number > scan_number_gijoon){*/
+    if (is_max_speed_okay) {
+        if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
+            is_max_speed_okay = false;
+            start_velocity = 30;
+        }
+        // if (start_velocity > 1) start_velocity -= 0.01;
+        // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5; //velocity is 20
+        // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2; //velocity is 50
+        else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 10 && start_velocity > 1) start_velocity -= 0.1;
+    }
+    if (is_max_speed_okay_after) {
+		int max_index = maximum_element_index(filtered_ranges);
+		steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
+		steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
+
+        if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
+            is_max_speed_okay_after = false;
+            start_velocity = 30;
+        }
+        // if (start_velocity > 1) start_velocity -= 0.01;
+        // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
+        // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
+        else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 10 && start_velocity > 1) start_velocity -= 0.1;
+	}
+    else {
+	if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
+	    is_max_speed_okay_after = true;
+            return;
+	}
+        int original_max = maximum_element_index(filtered_ranges);
+
+        int max_element_index = -1;
+>>>>>>> parent of e850bb3... Range is now 15
 
 
         // first start algorithm
