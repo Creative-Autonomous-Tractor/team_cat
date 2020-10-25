@@ -34,7 +34,7 @@ const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
 double start_velocity = 30;
 double prev_steering_angle = 0; // deg
-const double max_delta_steering_angle = 3.14 / 180 * 5;// deg
+const double max_delta_steering_angle = 3.14 / 180 * 15;// deg
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
