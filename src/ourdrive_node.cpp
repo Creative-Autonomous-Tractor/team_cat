@@ -29,11 +29,12 @@ const int average_size = 9;
 const double DELTA_CURVE_ANGLE_THRESHOLD = 5; //in degrees
 const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will be when curving
 
-
 int scan_number = 0; // how many times scancallback was called
 const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
 double start_velocity = 30;
+double prev_steering_angle = 0; // deg
+const double max_delta_steering_angle = 3.14 / 180 * 5;// deg
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
@@ -234,7 +235,6 @@ public:
 
         double steering_angle = 0;
 	double velocity = start_velocity;
-
 	    
 	// first start algorithm
 	scan_number++;
@@ -318,8 +318,14 @@ else if (scan_number > scan_number_gijoon){*/
                 x += (", "+ boost::lexical_cast<std::string>(filtered_ranges.at(maximum_element_index + i)));
             }
             ROS_INFO(x);*/
-			if(steering_angle > MAX_STEERING_ANGLE) steering_angle = MAX_STEERING_ANGLE;
-			if(steering_angle < -MAX_STEERING_ANGLE) steering_angle = -MAX_STEERING_ANGLE;
+			if(steering_angle > MAX_STEERING_ANGLE) {
+				steering_angle = MAX_STEERING_ANGLE;
+			}
+			if(steering_angle < -MAX_STEERING_ANGLE) {
+				steering_angle = -MAX_STEERING_ANGLE;
+			}
+			steering_angle = std::clamp(steering_angle, prev_steering_angle - max_delta_steering_angle, prev_steering_angle + max_delta_steering_angle);
+			prev_steering_angle = steering_angle;
             // ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
             //ROS_INFO("1: %f, 2: %f, 3: %f, 4: %f, 5: %f\n", filtered_ranges.at(max_element_index-2), filtered_ranges.at(max_element_index-1), filtered_ranges.at(max_element_index), filtered_ranges.at(max_element_index+1), filtered_ranges.at(max_element_index+2));
             //ROS_INFO("Disparity Angle is %f", )
