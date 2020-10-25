@@ -251,7 +251,10 @@ else if (scan_number > scan_number_gijoon){*/
         // if (start_velocity > 1) start_velocity -= 0.01;
         // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5; //velocity is 20
         // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2; //velocity is 50
-        else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 0.1;
+        else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) {
+		start_velocity -= 0.1;
+		ROS_INFO("Start Velocity is %i or %f", start_velocity, start_velocity);
+	}
     }
     else if (is_max_speed_okay_after) {
 		int max_index = maximum_element_index(filtered_ranges);
