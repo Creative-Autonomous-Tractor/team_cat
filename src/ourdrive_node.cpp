@@ -257,11 +257,12 @@ else if (scan_number > scan_number_gijoon){*/
 		int max_index = maximum_element_index(filtered_ranges);
 		steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
 		steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
-		ROS_INFO("Velocity: %f, Start_velocity: %f", velocity, start_velocity);
+		//ROS_INFO("Velocity: %f, Start_velocity: %f", velocity, start_velocity);
 
 	    if (scan_msg->ranges[scan_msg->ranges.size()/2] < 5) {
 	    	is_max_speed_okay_after = false;
 			start_velocity = 30;
+		    ROS_INFO("Jilju OUT");
 			return;
 		}
         // if (start_velocity > 1) start_velocity -= 0.01;
@@ -272,9 +273,10 @@ else if (scan_number > scan_number_gijoon){*/
     else {
 		if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
 	    	is_max_speed_okay_after = true;
+			ROS_INFO("Jilju IN");
             return;
 		}
-		ROS_INFO("Velocity: %f, Start_velocity: %f", velocity, start_velocity);
+		//ROS_INFO("Velocity: %f, Start_velocity: %f", velocity, start_velocity);
         int original_max = maximum_element_index(filtered_ranges);
 
         int max_element_index = -1;
