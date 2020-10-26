@@ -273,11 +273,16 @@ else if (scan_number > scan_number_gijoon){*/
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
             else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 1;
         }
-        else {
-            if (scan_msg->ranges[scan_msg->ranges.size()/2 - 4] > 50 && scan_msg->ranges[scan_msg->ranges.size() / 2 + 4] > 50) {
-                is_max_speed_okay_after = true;
+        else { // Original qualifying algorithm
+            if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
+                //is_max_speed_okay_after = true;
                 ROS_INFO("Jilju Start");
-                return;
+                k = 10;
+                //return;
+            }
+            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
+                ROS_INFO("Jilju Start");
+                k = 8;
             }
             int original_max = maximum_element_index(filtered_ranges);
 
