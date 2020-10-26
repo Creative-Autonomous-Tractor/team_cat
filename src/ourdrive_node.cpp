@@ -18,7 +18,7 @@ const double L = 0.7;
 // const double k = 2 * 1.4; //sqrt
 // const double k = 4; //cubed
 // const double k = 3.5; //jaewon's algorithm sqrt
-double k = 7.5; //jaewon's algorithm cubed
+double k = 9.5; //jaewon's algorithm cubed
 double steer_coef = 2;
 const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 100;//20;//limited and crahsed so trying limitless again 15.0; //
@@ -28,7 +28,7 @@ const double additional_gap = 5; //originally 1.2
 const int average_size = 9;
 
 const double DELTA_CURVE_ANGLE_THRESHOLD = 5; //in degrees
-const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will be when curving
+const double CURVE_VELOCITY_COEFFICIENT = 0.07; //how much lower the speed will be when curving
 
 
 int scan_number = 0; // how many times scancallback was called
