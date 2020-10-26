@@ -38,6 +38,7 @@ double start_velocity = 30;
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
+bool jilju = true;
 
 const double jilju_angle = 0.15 * 3.14 / 180;
 
@@ -278,14 +279,16 @@ else if (scan_number > scan_number_gijoon){*/
             if (filtered_ranges[filtered_ranges.size() / 2] > 40 && filtered_ranges[filtered_ranges.size() / 2 - 4] > 40
                 && filtered_ranges[filtered_ranges.size() / 2 + 4] > 40) {
                 //is_max_speed_okay_after = true;
-                ROS_INFO("Jilju Start");
+                if (!jilju) ROS_INFO("Jilju Start");
+                jilju = true;
                 k = 10;
                 steer_coef = 4;
                 //return;
             }
             if (filtered_ranges[filtered_ranges.size() / 2] < 10 && filtered_ranges[filtered_ranges.size() / 2 - 4] < 10
                 && filtered_ranges[filtered_ranges.size() / 2 + 4] < 10) {
-                ROS_INFO("Jilju End");
+                if (jilju) ROS_INFO("Jilju End");
+                jilju = false;
                 k = 7.5;
                 steer_coef = 2;
             }
