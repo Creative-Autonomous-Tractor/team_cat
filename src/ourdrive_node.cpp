@@ -337,8 +337,11 @@ else if (scan_number > scan_number_gijoon){*/
             velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size() / 2));
         }
 
-        steering_angle = std::clamp(steering_angle, -MAX_STEERING_ANGLE, MAX_STEERING_ANGLE);
-        velocity = std::clamp(velocity, 0.0, MAX_Velocity);
+        //steering_angle = std::clamp(steering_angle, -MAX_STEERING_ANGLE, MAX_STEERING_ANGLE);
+        if (steering_angle > MAX_STEERING_ANGLE) steering_angle = MAX_STEERING_ANGLE;
+        if (steering_angle < -MAX_STEERING_ANGLE) steering_angle = -MAX_STEERING_ANGLE;
+        //velocity = std::clamp(velocity, 0.0, MAX_Velocity);
+        if (velocity > MAX_Velocity) velocity = MAX_Velocity;
 
         // Publish Drive message
         ackermann_msgs::AckermannDriveStamped drive_msg;
