@@ -278,6 +278,7 @@ else if (scan_number > scan_number_gijoon){*/
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 20 && start_velocity > 1) {
                 start_velocity -= 0.1;
             }
+            else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) start_velocity = 20;
             velocity = start_velocity;
             ROS_INFO("Speed is %f and Steering angle is %f", velocity, steering_angle);
         }
