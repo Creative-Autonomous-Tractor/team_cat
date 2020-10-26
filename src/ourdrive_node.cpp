@@ -8,6 +8,7 @@
 #include <ackermann_msgs/AckermannDriveStamped.h>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
+#include <nav_msgs/Odometry.h>
 #include "std_msgs/Float32.h"
 
 #define truncated_coverage_angle_ 3.14*4/6
@@ -35,6 +36,8 @@ int scan_number = 0; // how many times scancallback was called
 const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
 double start_velocity = 30;
+
+double cur_speed = 0;
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
@@ -127,6 +130,7 @@ public:
         //drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("drive", 100)), // originally "nav"
 
         lidar_sub_(node_handle_.subscribe("team_cat/scan", 100, &longest_path::scan_callback, this)),
+        odom_sub_(node_handle_.subscribe("team_cat/odom", 100, &longest_path::odom_callback, this)),
         drive_pub_(node_handle_.advertise<ackermann_msgs::AckermannDriveStamped>("team_cat/drive", 100)), // originally "nav"
         truncated_(false) {}
 
@@ -250,7 +254,7 @@ else if (scan_number > scan_number_gijoon){*/
             //ROS_INFO("Start Velocity is %i or %f", start_velocity, start_velocity);
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
                 is_max_speed_okay = false;
-                start_velocity = 10;
+                start_velocity = 20;
             }
             // if (start_velocity > 1) start_velocity -= 0.01;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5; //velocity is 20
@@ -259,6 +263,7 @@ else if (scan_number > scan_number_gijoon){*/
                 start_velocity -= 1;
             }
             velocity = start_velocity;
+            ROS_INFO("Current speed is %f", cur_speed);
         }
         else if (is_max_speed_okay_after) {
             int max_index = maximum_element_index(filtered_ranges);
@@ -268,7 +273,7 @@ else if (scan_number > scan_number_gijoon){*/
 
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {// && filtered_ranges[max_index] < 20) {
                 is_max_speed_okay_after = false;
-                start_velocity = 10;
+                start_velocity = 20;
                 jilju_angle = 0.8 * 3.14 / 180;
                 //for (int i = 0; i < 1000; i++) ROS_INFO("Jilju End");
                 return;
@@ -280,15 +285,15 @@ else if (scan_number > scan_number_gijoon){*/
                 start_velocity -= 1;
                 jilju_angle = 0.1 * 3.14 / 180;
             }
-            else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) start_velocity = 10;
+            else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) start_velocity = 20;
             velocity = start_velocity;
-            ROS_INFO("Speed is %f and Steering angle is %f", velocity, steering_angle);
+            //ROS_INFO("Speed is %f and Steering angle is %f", velocity, steering_angle);
         }
         else { // Original qualifying algorithm
             if (filtered_ranges[int(filtered_ranges.size() / 2)] > 40) {
-                // is_max_speed_okay_after = true;
+                is_max_speed_okay_after = true;
                 //for (int i = 0; i < 1000; i++) ROS_INFO("Jilju Start");
-                //return;
+                return;/*
                 if (!jilju) {
                     for (int i = 0; i < 1000; i++) ROS_INFO("Jilju Start");
                 }
@@ -304,7 +309,7 @@ else if (scan_number > scan_number_gijoon){*/
                 }
                 jilju = false;
                 k = 7.5;
-                steer_coef = 2;
+                steer_coef = 2;*/
             }
             int original_max = maximum_element_index(filtered_ranges);
 
@@ -382,9 +387,14 @@ else if (scan_number > scan_number_gijoon){*/
         drive_pub_.publish(drive_msg);
     }
 
+    void odom_callback(const nav_msgs::Odometry::ConstPtr& odom_msg) {
+        cur_speed = odom_msg->twist.twist.linear.x;
+    }
+
 private:
     ros::NodeHandle node_handle_;
     ros::Subscriber lidar_sub_;
+    ros::Subscriber odom_sub_;
     ros::Publisher drive_pub_;
 
     int truncated_start_index_;
