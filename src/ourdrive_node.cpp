@@ -282,7 +282,7 @@ else if (scan_number > scan_number_gijoon){*/
                 jilju = true;
                 k = 10;
                 steer_coef = 4;
-                ROS_INFO("Just got started to Jilju");
+                //ROS_INFO("Just got started to Jilju");
                 //return;
             }
             if (filtered_ranges[filtered_ranges.size() / 2] < 10) {
@@ -380,6 +380,7 @@ private:
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "ourdrive");
+    ROS_INFO("Start");
     longest_path longpath;
     ros::spin();
     return 0;
