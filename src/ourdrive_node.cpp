@@ -228,6 +228,7 @@ public:
             truncated_start_index_ = truncated_indices.first;
             truncated_end_index_ = truncated_indices.second;
             truncated_ = true;
+            for (int i = 0; i < 50; i++) ROS_INFO("Start");
         }
 
         // Pre-Process (zero out nans and Filter)
@@ -380,7 +381,6 @@ private:
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "ourdrive");
-    for(int i = 0; i < 10; i++) ROS_INFO("Start");
     longest_path longpath;
     ros::spin();
     return 0;
