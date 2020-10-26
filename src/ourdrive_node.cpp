@@ -286,9 +286,9 @@ else if (scan_number > scan_number_gijoon){*/
         }
         else { // Original qualifying algorithm
             if (filtered_ranges[int(filtered_ranges.size() / 2)] > 40) {
-                is_max_speed_okay_after = true;
+                // is_max_speed_okay_after = true;
                 //for (int i = 0; i < 1000; i++) ROS_INFO("Jilju Start");
-                return;/*
+                //return;
                 if (!jilju) {
                     for (int i = 0; i < 1000; i++) ROS_INFO("Jilju Start");
                 }
@@ -304,7 +304,7 @@ else if (scan_number > scan_number_gijoon){*/
                 }
                 jilju = false;
                 k = 7.5;
-                steer_coef = 2;*/
+                steer_coef = 2;
             }
             int original_max = maximum_element_index(filtered_ranges);
 
