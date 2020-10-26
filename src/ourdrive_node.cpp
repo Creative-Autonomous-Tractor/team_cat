@@ -236,7 +236,7 @@ public:
         filtered_ranges = apply_smoothing_filter(filtered_ranges);
 
         double steering_angle = 0;
-        double velocity = start_velocity;
+        double velocity = 0;
 
 
         // first start algorithm
@@ -258,6 +258,7 @@ else if (scan_number > scan_number_gijoon){*/
             else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) {
                 start_velocity -= 1;
             }
+            velocity = start_velocity;
         }
         else if (is_max_speed_okay_after) {
             int max_index = maximum_element_index(filtered_ranges);
@@ -275,6 +276,7 @@ else if (scan_number > scan_number_gijoon){*/
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
             else if (filtered_ranges[filtered_ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 1;
+            velocity = start_velocity;
         }
         else { // Original qualifying algorithm
             if (filtered_ranges[filtered_ranges.size() / 2] > 40) {
