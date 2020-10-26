@@ -228,7 +228,7 @@ public:
             truncated_start_index_ = truncated_indices.first;
             truncated_end_index_ = truncated_indices.second;
             truncated_ = true;
-            for (int i = 0; i < 1000; i++) ROS_INFO("Start");
+            // for (int i = 0; i < 1000; i++) ROS_INFO("Start");
         }
 
         // Pre-Process (zero out nans and Filter)
@@ -279,7 +279,9 @@ else if (scan_number > scan_number_gijoon){*/
         else { // Original qualifying algorithm
             if (filtered_ranges[filtered_ranges.size() / 2] > 40) {
                 //is_max_speed_okay_after = true;
-                if (!jilju) ROS_INFO("Jilju Start");
+                if (!jilju) {
+                    for (int i = 0; i < 1000; i++) ROS_INFO("Jilju Start");
+                }
                 jilju = true;
                 k = 10;
                 steer_coef = 4;
@@ -287,7 +289,9 @@ else if (scan_number > scan_number_gijoon){*/
                 //return;
             }
             if (filtered_ranges[filtered_ranges.size() / 2] < 10) {
-                if (jilju) ROS_INFO("Jilju End");
+                if (jilju) {
+                    for (int i = 0; i < 1000; i++) ROS_INFO("Jilju End");
+                }
                 jilju = false;
                 k = 7.5;
                 steer_coef = 2;
