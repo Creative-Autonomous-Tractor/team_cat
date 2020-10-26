@@ -263,7 +263,7 @@ else if (scan_number > scan_number_gijoon){*/
                 start_velocity -= 1;
             }
             velocity = start_velocity;
-            ROS_INFO("Current speed is %f", cur_speed);
+            //ROS_INFO("Current speed is %f", cur_speed);
         }
         else if (is_max_speed_okay_after) {
             int max_index = maximum_element_index(filtered_ranges);
@@ -368,6 +368,7 @@ else if (scan_number > scan_number_gijoon){*/
             // double velocity = std::min(k * sqrt(filtered_ranges.at(filtered_ranges.size()/2)), MAX_Velocity);
             // double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
             velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size() / 2));
+            ROS_INFO("Current speed is %f", cur_speed);
         }
 
         //steering_angle = std::clamp(steering_angle, -MAX_STEERING_ANGLE, MAX_STEERING_ANGLE);
