@@ -276,7 +276,7 @@ else if (scan_number > scan_number_gijoon){*/
             // if (start_velocity > 1) start_velocity -= 0.01;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
-            else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 20 && start_velocity > 1 && filtered_ranges[max_index] < 20) {
+            else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 25 && start_velocity > 1 && filtered_ranges[max_index] < 25) {
                 start_velocity -= 1;
                 jilju_angle = 0.1 * 3.14 / 180;
             }
