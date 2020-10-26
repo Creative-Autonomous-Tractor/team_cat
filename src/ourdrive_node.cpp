@@ -20,7 +20,7 @@ const double L = 0.7;
 // const double k = 3.5; //jaewon's algorithm sqrt
 const double k = 7.5; //jaewon's algorithm cubed
 const double deltath = 0.1; // disparity gijoon
-const double MAX_Velocity = 100;//limited and crahsed so trying limitless again 15.0; //
+const double MAX_Velocity = 20;//limited and crahsed so trying limitless again 15.0; //
 const double MAX_STEERING_ANGLE = 1.4819;// 25 * 3.14 / 180; //
 const double MIN_SAFE_Distance = 15.0; //
 const double additional_gap = 5; //originally 1.2
@@ -323,7 +323,7 @@ else if (scan_number > scan_number_gijoon){*/
             ROS_INFO(x);*/
 			if(steering_angle > MAX_STEERING_ANGLE) steering_angle = MAX_STEERING_ANGLE;
 			if(steering_angle < -MAX_STEERING_ANGLE) steering_angle = -MAX_STEERING_ANGLE;
-            // ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
+            ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
             //ROS_INFO("1: %f, 2: %f, 3: %f, 4: %f, 5: %f\n", filtered_ranges.at(max_element_index-2), filtered_ranges.at(max_element_index-1), filtered_ranges.at(max_element_index), filtered_ranges.at(max_element_index+1), filtered_ranges.at(max_element_index+2));
             //ROS_INFO("Disparity Angle is %f", )
         }
