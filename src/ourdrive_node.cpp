@@ -19,6 +19,7 @@ const double L = 0.7;
 // const double k = 4; //cubed
 // const double k = 3.5; //jaewon's algorithm sqrt
 double k = 7.5; //jaewon's algorithm cubed
+double steer_coef = 2;
 const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 100;//20;//limited and crahsed so trying limitless again 15.0; //
 const double MAX_STEERING_ANGLE = 0.4189;// 25 * 3.14 / 180; //
@@ -278,13 +279,15 @@ else if (scan_number > scan_number_gijoon){*/
                 && filtered_ranges[filtered_ranges.size() / 2 + 4] > 40) {
                 //is_max_speed_okay_after = true;
                 ROS_INFO("Jilju Start");
-                k = 10;
+                k = 11;
+                steer_coef = 4;
                 //return;
             }
             if (filtered_ranges[filtered_ranges.size() / 2] < 10 && filtered_ranges[filtered_ranges.size() / 2 - 4] < 10
                 && filtered_ranges[filtered_ranges.size() / 2 + 4] < 10) {
                 ROS_INFO("Jilju Start");
                 k = 7.5;
+                steer_coef = 2;
             }
             int original_max = maximum_element_index(filtered_ranges);
 
@@ -321,7 +324,7 @@ else if (scan_number > scan_number_gijoon){*/
                 double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
                 /* if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
                     temp_steering_angle = 0; Comment to see if anything will be different*/
-                steering_angle = temp_steering_angle / 2; //3 * std::pow(temp_steering_angle, 1/3.);
+                steering_angle = temp_steering_angle / steer_coef; //3 * std::pow(temp_steering_angle, 1/3.);
 
                 //ROS_INFO("The difference is %i", max_element_index - original_max);
                 /*std::string x = "";
