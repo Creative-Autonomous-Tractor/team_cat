@@ -274,11 +274,11 @@ else if (scan_number > scan_number_gijoon){*/
             else if (filtered_ranges[filtered_ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 1;
         }
         else { // Original qualifying algorithm
-            if (filtered_ranges[filtered_ranges.size() / 2] > 50 && filtered_ranges[filtered_ranges.size() / 2 - 4] > 50
-                && filtered_ranges[filtered_ranges.size() / 2 + 4] > 50) {
+            if (filtered_ranges[filtered_ranges.size() / 2] > 40 && filtered_ranges[filtered_ranges.size() / 2 - 4] > 40
+                && filtered_ranges[filtered_ranges.size() / 2 + 4] > 40) {
                 //is_max_speed_okay_after = true;
                 ROS_INFO("Jilju Start");
-                k = 11;
+                k = 10;
                 //return;
             }
             if (filtered_ranges[filtered_ranges.size() / 2] < 10 && filtered_ranges[filtered_ranges.size() / 2 - 4] < 10
