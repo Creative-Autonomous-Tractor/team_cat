@@ -40,7 +40,7 @@ bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
 bool jilju = false;
 
-const double jilju_angle = 0.15 * 3.14 / 180;
+const double jilju_angle = 0.11 * 3.14 / 180;
 
 double min(double a, double b) {
     return a > b ? b : a;
@@ -265,10 +265,10 @@ else if (scan_number > scan_number_gijoon){*/
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
             //ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
 
-            if (filtered_ranges[filtered_ranges.size() / 2] < 5 && filtered_ranges[max_index] < 20) {
+            if (filtered_ranges[filtered_ranges.size() / 2] < 5) {// && filtered_ranges[max_index] < 20) {
                 is_max_speed_okay_after = false;
                 start_velocity = 30;
-                ROS_INFO("Jilju End");
+                for (int i = 0; i < 1000; i++) ROS_INFO("Jilju End");
                 return;
             }
             // if (start_velocity > 1) start_velocity -= 0.01;
@@ -278,7 +278,8 @@ else if (scan_number > scan_number_gijoon){*/
         }
         else { // Original qualifying algorithm
             if (filtered_ranges[filtered_ranges.size() / 2] > 40) {
-                //is_max_speed_okay_after = true;
+                is_max_speed_okay_after = true;
+                for (int i = 0; i < 1000; i++) ROS_INFO("Jilju Start");/*
                 if (!jilju) {
                     for (int i = 0; i < 1000; i++) ROS_INFO("Jilju Start");
                 }
@@ -294,7 +295,7 @@ else if (scan_number > scan_number_gijoon){*/
                 }
                 jilju = false;
                 k = 7.5;
-                steer_coef = 2;
+                steer_coef = 2;*/
             }
             int original_max = maximum_element_index(filtered_ranges);
 
