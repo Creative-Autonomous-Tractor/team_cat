@@ -276,8 +276,7 @@ else if (scan_number > scan_number_gijoon){*/
             else if (filtered_ranges[filtered_ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 1;
         }
         else { // Original qualifying algorithm
-            if (filtered_ranges[filtered_ranges.size() / 2] > 40 && filtered_ranges[filtered_ranges.size() / 2 - 4] > 40
-                && filtered_ranges[filtered_ranges.size() / 2 + 4] > 40) {
+            if (filtered_ranges[filtered_ranges.size() / 2] > 40) {
                 //is_max_speed_okay_after = true;
                 if (!jilju) ROS_INFO("Jilju Start");
                 jilju = true;
@@ -285,8 +284,7 @@ else if (scan_number > scan_number_gijoon){*/
                 steer_coef = 4;
                 //return;
             }
-            if (filtered_ranges[filtered_ranges.size() / 2] < 10 && filtered_ranges[filtered_ranges.size() / 2 - 4] < 10
-                && filtered_ranges[filtered_ranges.size() / 2 + 4] < 10) {
+            if (filtered_ranges[filtered_ranges.size() / 2] < 10) {
                 if (jilju) ROS_INFO("Jilju End");
                 jilju = false;
                 k = 7.5;
