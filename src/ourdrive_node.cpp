@@ -380,7 +380,7 @@ private:
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "ourdrive");
-    ROS_INFO("Start");
+    for(int i = 0; i < 10; i++) ROS_INFO("Start");
     longest_path longpath;
     ros::spin();
     return 0;
