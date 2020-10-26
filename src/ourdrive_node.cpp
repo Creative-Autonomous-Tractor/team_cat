@@ -228,7 +228,7 @@ public:
             truncated_start_index_ = truncated_indices.first;
             truncated_end_index_ = truncated_indices.second;
             truncated_ = true;
-            for (int i = 0; i < 50; i++) ROS_INFO("Start");
+            for (int i = 0; i < 1000; i++) ROS_INFO("Start");
         }
 
         // Pre-Process (zero out nans and Filter)
