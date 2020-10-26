@@ -280,7 +280,7 @@ else if (scan_number > scan_number_gijoon){*/
                 k = 11;
                 //return;
             }
-            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
+            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 10) {
                 ROS_INFO("Jilju Start");
                 k = 7.5;
             }
