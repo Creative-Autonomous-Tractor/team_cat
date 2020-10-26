@@ -33,7 +33,7 @@ const double CURVE_VELOCITY_COEFFICIENT = 0.1; //how much lower the speed will b
 int scan_number = 0; // how many times scancallback was called
 const int scan_number_gijoon = 500;
 const int scan_number_decelerate_gijoon = 400;
-float start_velocity = 100;
+float start_velocity = 30;
 
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
