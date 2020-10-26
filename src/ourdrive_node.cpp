@@ -250,7 +250,7 @@ else if (scan_number > scan_number_gijoon){*/
             //ROS_INFO("Start Velocity is %i or %f", start_velocity, start_velocity);
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
                 is_max_speed_okay = false;
-                start_velocity = 15;
+                start_velocity = 20;
             }
             // if (start_velocity > 1) start_velocity -= 0.01;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5; //velocity is 20
@@ -268,7 +268,7 @@ else if (scan_number > scan_number_gijoon){*/
 
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {// && filtered_ranges[max_index] < 20) {
                 is_max_speed_okay_after = false;
-                start_velocity = 15;
+                start_velocity = 20;
                 //for (int i = 0; i < 1000; i++) ROS_INFO("Jilju End");
                 return;
             }
@@ -276,9 +276,9 @@ else if (scan_number > scan_number_gijoon){*/
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 20 && start_velocity > 1 && filtered_ranges[max_index] < 20) {
-                start_velocity -= 0.5;
+                start_velocity -= 0.1;
             }
-            else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) start_velocity = 15;
+            else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) start_velocity = 20;
             velocity = start_velocity;
             ROS_INFO("Speed is %f and Steering angle is %f", velocity, steering_angle);
         }
