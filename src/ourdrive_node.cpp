@@ -18,7 +18,7 @@ const double L = 0.7;
 // const double k = 2 * 1.4; //sqrt
 // const double k = 4; //cubed
 // const double k = 3.5; //jaewon's algorithm sqrt
-const double k = 7.5; //jaewon's algorithm cubed
+const double k = 8; //jaewon's algorithm cubed
 const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 20;//limited and crahsed so trying limitless again 15.0; //
 const double MAX_STEERING_ANGLE = 0.4189;// 25 * 3.14 / 180; //
@@ -262,7 +262,7 @@ else if (scan_number > scan_number_gijoon){*/
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
             ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
 
-            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
+            if (scan_msg->ranges[scan_msg->ranges.size() / 2 - 4] < 5 && scan_msg->ranges[scan_msg->ranges.size() / 2 + 4] < 5) {
                 is_max_speed_okay_after = false;
                 start_velocity = 30;
                 ROS_INFO("Jilju End");
