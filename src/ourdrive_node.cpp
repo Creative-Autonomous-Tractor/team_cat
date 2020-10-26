@@ -260,7 +260,7 @@ else if (scan_number > scan_number_gijoon){*/
             int max_index = maximum_element_index(filtered_ranges);
             steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
-            ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
+            //ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
 
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5 && filtered_ranges[max_index] < 20) {
                 is_max_speed_okay_after = false;
