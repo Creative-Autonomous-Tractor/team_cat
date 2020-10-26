@@ -40,7 +40,7 @@ bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
 bool jilju = false;
 
-const double jilju_angle = 0.8 * 3.14 / 180;
+const double jilju_angle = 0.11 * 3.14 / 180;
 
 double min(double a, double b) {
     return a > b ? b : a;
