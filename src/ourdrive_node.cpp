@@ -262,7 +262,7 @@ else if (scan_number > scan_number_gijoon){*/
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
             //ROS_INFO("Steering Angle is %f", steering_angle * 180 / 3.14);
 
-            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5 && filtered_ranges[max_index] < 20) {
+            if (filtered_ranges[scan_msg->ranges.size() / 2] < 5 && filtered_ranges[max_index] < 20) {
                 is_max_speed_okay_after = false;
                 start_velocity = 30;
                 ROS_INFO("Jilju End");
@@ -271,18 +271,18 @@ else if (scan_number > scan_number_gijoon){*/
             // if (start_velocity > 1) start_velocity -= 0.01;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
-            else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 1;
+            else if (filtered_ranges[scan_msg->ranges.size() / 2] < 20 && start_velocity > 1) start_velocity -= 1;
         }
         else { // Original qualifying algorithm
-            if (scan_msg->ranges[scan_msg->ranges.size() / 2] > 50 && scan_msg->ranges[scan_msg->ranges.size() / 2 - 4] > 50
-                && scan_msg->ranges[scan_msg->ranges.size() / 2 + 4] > 50) {
+            if (filtered_ranges[scan_msg->ranges.size() / 2] > 50 && filtered_ranges[scan_msg->ranges.size() / 2 - 4] > 50
+                && filtered_ranges[scan_msg->ranges.size() / 2 + 4] > 50) {
                 //is_max_speed_okay_after = true;
                 ROS_INFO("Jilju Start");
                 k = 11;
                 //return;
             }
-            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 10 && scan_msg->ranges[scan_msg->ranges.size() / 2 - 4] < 10
-                && scan_msg->ranges[scan_msg->ranges.size() / 2 + 4] < 10) {
+            if (filtered_ranges[scan_msg->ranges.size() / 2] < 10 && filtered_ranges[scan_msg->ranges.size() / 2 - 4] < 10
+                && filtered_ranges[scan_msg->ranges.size() / 2 + 4] < 10) {
                 ROS_INFO("Jilju Start");
                 k = 7.5;
             }
