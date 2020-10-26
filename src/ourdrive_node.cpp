@@ -27,7 +27,7 @@ const double MIN_SAFE_Distance = 15.0; //
 const double additional_gap = 5; //originally 1.2
 const int average_size = 9;
 
-const double DELTA_CURVE_ANGLE_THRESHOLD = 5; //in degrees
+const double DELTA_CURVE_ANGLE_THRESHOLD = 3; //in degrees
 const double CURVE_VELOCITY_COEFFICIENT = 0.05; //how much lower the speed will be when curving
 
 
