@@ -18,7 +18,7 @@ const double L = 0.7;
 // const double k = 2 * 1.4; //sqrt
 // const double k = 4; //cubed
 // const double k = 3.5; //jaewon's algorithm sqrt
-double k = 8; //jaewon's algorithm cubed
+double k = 7.5; //jaewon's algorithm cubed
 const double deltath = 0.1; // disparity gijoon
 const double MAX_Velocity = 100;//20;//limited and crahsed so trying limitless again 15.0; //
 const double MAX_STEERING_ANGLE = 0.4189;// 25 * 3.14 / 180; //
@@ -277,12 +277,12 @@ else if (scan_number > scan_number_gijoon){*/
             if (scan_msg->ranges[scan_msg->ranges.size()/2] > 50) {
                 //is_max_speed_okay_after = true;
                 ROS_INFO("Jilju Start");
-                k = 10;
+                k = 11;
                 //return;
             }
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {
                 ROS_INFO("Jilju Start");
-                k = 8;
+                k = 7.5;
             }
             int original_max = maximum_element_index(filtered_ranges);
 
