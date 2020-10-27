@@ -266,7 +266,7 @@ else if (scan_number > scan_number_gijoon){*/
             //ROS_INFO("Current speed is %f", cur_speed);
         }
         else if (is_max_speed_okay_after) {
-            jilju_angle = 2 * 3.14 / 180 / std::pow(cur_speed, 4 / 3);
+            jilju_angle = 0.11 * 3.14 / 180; //2 * 3.14 / 180 / std::pow(cur_speed, 4 / 3);
             int max_index = maximum_element_index(filtered_ranges);
             steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
@@ -288,12 +288,13 @@ else if (scan_number > scan_number_gijoon){*/
                 ROS_INFO("Started Speed Decrease");
             }
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) {
-                if (cur_speed > 14.9) start_velocity = 30;
+                start_velocity = 30;
+                /*if (cur_speed > 14.9) start_velocity = 30;
                 else if (cur_speed > 9.9) start_velocity = 15;
-                else start_velocity = 10;
+                else start_velocity = 10;*/
             }
             velocity = start_velocity;
-            steering_angle = 0; // just checkin
+            // steering_angle = 0; // just checkin
             //ROS_INFO("Speed is %f and Steering angle is %f", velocity, steering_angle);
         }
         else { // Original qualifying algorithm
