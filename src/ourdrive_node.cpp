@@ -42,7 +42,6 @@ double cur_speed = 0;
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
 bool jilju = false;
-bool jilju_ending = false;
 
 double jilju_angle = 0.8 * 3.14 / 180;
 
@@ -267,15 +266,15 @@ else if (scan_number > scan_number_gijoon){*/
             //ROS_INFO("Current speed is %f", cur_speed);
         }
         else if (is_max_speed_okay_after) {
-            jilju_angle = 5 * 3.14 / 180 / std::pow(cur_speed, 4 / 3);
+            jilju_angle = 2 * 3.14 / 180 / std::pow(cur_speed, 4 / 3);
             int max_index = maximum_element_index(filtered_ranges);
             steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
             //ROS_INFO("Current speed is %f, and steering angle is %f", cur_speed, steering_angle * 180 / 3.14);
 
-            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5 && filtered_ranges[max_index] < 10) {
+            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {// && filtered_ranges[max_index] < 20) {
                 is_max_speed_okay_after = false;
-                start_velocity = 30;
+                start_velocity = 10;
                 //jilju_angle = 0.8 * 3.14 / 180;
                 //for (int i = 0; i < 1000; i++) ROS_INFO("Jilju End");
                 return;
@@ -283,25 +282,16 @@ else if (scan_number > scan_number_gijoon){*/
             // if (start_velocity > 1) start_velocity -= 0.01;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
-            else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 20 && start_velocity > 1 && filtered_ranges[max_index] < 20) {
-                if (cur_speed < 10.1) start_velocity = 5;
-                //else if (cur_speed < 15.1) start_velocity = 10;
-                else start_velocity = 10;
-                //start_velocity -= 1;
+            else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 25 && start_velocity > 1 && filtered_ranges[max_index] < 25) {
+                start_velocity -= 1;
                 //jilju_angle = 0.1 * 3.14 / 180;
                 ROS_INFO("Started Speed Decrease");
-                steer_coef = 8;
-                jilju_ending = true;
             }
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) {
-                start_velocity = 30;
-                /*if (cur_speed > 14.9) start_velocity = 30;
-                else if (cur_speed > 9.9) start_velocity = 15;
-                else start_velocity = 10;*/
-                steer_coef = 2;
+                // if (start_velocity > 10) start_velocity = 20;
+                else start_velocity = 10;
             }
             velocity = start_velocity;
-            // steering_angle = 0; // just checkin
             //ROS_INFO("Speed is %f and Steering angle is %f", velocity, steering_angle);
         }
         else { // Original qualifying algorithm
@@ -361,10 +351,6 @@ else if (scan_number > scan_number_gijoon){*/
                 double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
                 /* if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
                     temp_steering_angle = 0; Comment to see if anything will be different*/
-                if (cur_speed < 6) {
-                    jilju_ending = false;
-                    steer_coef = 2;
-                }
                 steering_angle = temp_steering_angle / steer_coef; //3 * std::pow(temp_steering_angle, 1/3.);
 
                 //ROS_INFO("The difference is %i", max_element_index - original_max);
@@ -387,7 +373,7 @@ else if (scan_number > scan_number_gijoon){*/
             // double velocity = std::min(k * sqrt(filtered_ranges.at(filtered_ranges.size()/2)), MAX_Velocity);
             // double velocity = std::min(k * std::pow(filtered_ranges.at(filtered_ranges.size()/2), 1/3.), MAX_Velocity);
             velocity = get_velocity_by_steeringAngle(steering_angle, filtered_ranges.at(filtered_ranges.size() / 2));
-            ROS_INFO("Current speed is %f, steering angle is %f", cur_speed, steering_angle);
+            //ROS_INFO("Current speed is %f, steering angle is %f", cur_speed, steering_angle);
         }
 
         //steering_angle = std::clamp(steering_angle, -MAX_STEERING_ANGLE, MAX_STEERING_ANGLE);
