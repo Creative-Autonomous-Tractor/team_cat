@@ -273,7 +273,7 @@ else if (scan_number > scan_number_gijoon){*/
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
             //ROS_INFO("Current speed is %f, and steering angle is %f", cur_speed, steering_angle * 180 / 3.14);
 
-            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) && filtered_ranges[max_index] < 10) {
+            if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5 && filtered_ranges[max_index] < 10) {
                 is_max_speed_okay_after = false;
                 start_velocity = 30;
                 //jilju_angle = 0.8 * 3.14 / 180;
