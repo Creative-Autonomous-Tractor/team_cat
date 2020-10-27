@@ -288,7 +288,7 @@ else if (scan_number > scan_number_gijoon){*/
                 ROS_INFO("Started Speed Decrease");
             }
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) {
-                else if (cur_speed > 14.9) start_velocity = 30;
+                if (cur_speed > 14.9) start_velocity = 30;
                 else start_velocity = 15;
             }
             velocity = start_velocity;
