@@ -360,7 +360,7 @@ else if (scan_number > scan_number_gijoon){*/
                 double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
                 /* if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
                     temp_steering_angle = 0; Comment to see if anything will be different*/
-                if (cur_speed < 5 && jilju_ending) {
+                if (cur_speed < 6 && jilju_ending) {
                     jilju_ending = false;
                     steer_coef = 2;
                 }
