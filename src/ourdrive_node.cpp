@@ -290,7 +290,7 @@ else if (scan_number > scan_number_gijoon){*/
                 //start_velocity -= 1;
                 //jilju_angle = 0.1 * 3.14 / 180;
                 ROS_INFO("Started Speed Decrease");
-                steer_coef = 4;
+                steer_coef = 8;
                 jilju_ending = true;
             }
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) {
@@ -298,6 +298,7 @@ else if (scan_number > scan_number_gijoon){*/
                 if (cur_speed > 14.9) start_velocity = 30;
                 else if (cur_speed > 9.9) start_velocity = 15;
                 else start_velocity = 10;
+                steer_coef = 2;
             }
             velocity = start_velocity;
             // steering_angle = 0; // just checkin
