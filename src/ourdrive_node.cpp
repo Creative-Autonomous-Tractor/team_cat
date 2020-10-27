@@ -284,8 +284,8 @@ else if (scan_number > scan_number_gijoon){*/
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 20 && start_velocity > 1 && filtered_ranges[max_index] < 20) {
                 if (cur_speed < 10.1) start_velocity = 5;
-                else if (cur_speed < 15.1) start_velocity = 10;
-                else start_velocity = 15;
+                //else if (cur_speed < 15.1) start_velocity = 10;
+                else start_velocity = 10;
                 //start_velocity -= 1;
                 //jilju_angle = 0.1 * 3.14 / 180;
                 ROS_INFO("Started Speed Decrease");
