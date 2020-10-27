@@ -42,6 +42,7 @@ double cur_speed = 0;
 bool is_max_speed_okay = true;
 bool is_max_speed_okay_after = false;
 bool jilju = false;
+bool jilju_ending = false;
 
 double jilju_angle = 0.8 * 3.14 / 180;
 
@@ -282,13 +283,15 @@ else if (scan_number > scan_number_gijoon){*/
             // if (start_velocity > 1) start_velocity -= 0.01;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
-            else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 25 && start_velocity > 1 && filtered_ranges[max_index] < 25) {
+            else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 20 && start_velocity > 1 && filtered_ranges[max_index] < 20) {
                 if (cur_speed < 10.1) start_velocity = 5;
                 //else if (cur_speed < 15.1) start_velocity = 10;
                 else start_velocity = 10;
                 //start_velocity -= 1;
                 //jilju_angle = 0.1 * 3.14 / 180;
                 ROS_INFO("Started Speed Decrease");
+                steer_coef = 4;
+                jilju_ending = true;
             }
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) {
                 start_velocity = 30;
@@ -357,6 +360,10 @@ else if (scan_number > scan_number_gijoon){*/
                 double temp_steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_element_index);
                 /* if (max_element_index > filtered_ranges.size() / 2 - 15 && max_element_index < filtered_ranges.size() / 2 + 15)
                     temp_steering_angle = 0; Comment to see if anything will be different*/
+                if (cur_speed < 5 && jilju_ending) {
+                    jilju_ending = false;
+                    steer_coef = 2;
+                }
                 steering_angle = temp_steering_angle / steer_coef; //3 * std::pow(temp_steering_angle, 1/3.);
 
                 //ROS_INFO("The difference is %i", max_element_index - original_max);
