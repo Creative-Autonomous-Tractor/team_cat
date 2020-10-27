@@ -266,7 +266,7 @@ else if (scan_number > scan_number_gijoon){*/
             //ROS_INFO("Current speed is %f", cur_speed);
         }
         else if (is_max_speed_okay_after) {
-            jilju_angle = 0.5 * 3.14 / 180; //2 * 3.14 / 180 / std::pow(cur_speed, 4 / 3);
+            jilju_angle = 5 * 3.14 / 180 / std::pow(cur_speed, 4 / 3);
             int max_index = maximum_element_index(filtered_ranges);
             steering_angle = scan_msg->angle_min + scan_msg->angle_increment * (truncated_start_index_ + max_index);
             steering_angle = std::clamp(steering_angle, -jilju_angle, jilju_angle);
@@ -274,7 +274,7 @@ else if (scan_number > scan_number_gijoon){*/
 
             if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 5) {// && filtered_ranges[max_index] < 20) {
                 is_max_speed_okay_after = false;
-                start_velocity = 10;
+                start_velocity = 30;
                 //jilju_angle = 0.8 * 3.14 / 180;
                 //for (int i = 0; i < 1000; i++) ROS_INFO("Jilju End");
                 return;
@@ -283,15 +283,18 @@ else if (scan_number > scan_number_gijoon){*/
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 15) velocity /= 5;
             // else if (scan_msg->ranges[scan_msg->ranges.size() / 2] < 20) velocity /= 2;
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] < 20 && start_velocity > 1 && filtered_ranges[max_index] < 20) {
-                start_velocity -= 1;
+                if (cur_speed < 10.1) start_velocity = 5;
+                else if (cur_speed < 15.1) start_velocity = 10;
+                else start_velocity = 15;
+                //start_velocity -= 1;
                 //jilju_angle = 0.1 * 3.14 / 180;
                 ROS_INFO("Started Speed Decrease");
             }
             else if (filtered_ranges[int(filtered_ranges.size() / 2)] > 20) {
                 start_velocity = 30;
-                /*if (cur_speed > 14.9) start_velocity = 30;
+                if (cur_speed > 14.9) start_velocity = 30;
                 else if (cur_speed > 9.9) start_velocity = 15;
-                else start_velocity = 10;*/
+                else start_velocity = 10;
             }
             velocity = start_velocity;
             // steering_angle = 0; // just checkin
