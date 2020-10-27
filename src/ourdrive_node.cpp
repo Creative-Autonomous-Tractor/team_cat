@@ -293,6 +293,7 @@ else if (scan_number > scan_number_gijoon){*/
                 else start_velocity = 10;
             }
             velocity = start_velocity;
+            steering_angle = 0; // just checkin
             //ROS_INFO("Speed is %f and Steering angle is %f", velocity, steering_angle);
         }
         else { // Original qualifying algorithm
